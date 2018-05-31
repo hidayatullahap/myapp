@@ -14,10 +14,16 @@ class App extends Component {
     this.getImage = this.getImage.bind(this);
     this.state = {
       pictures: [],
+      isLoading: false,
     };
+    console.log(this.state.isLoading);
   }
 
   async getImage() {
+    this.setState({
+      isLoading: true
+    });
+
     try {
       let { data }  = await Axios.get('https://dog.ceo/api/breeds/image/random')
       let pictures = [data.message]
@@ -27,7 +33,9 @@ class App extends Component {
     } catch (e) {
       console.error(e);
     } finally {
-
+      this.setState({
+        isLoading: false,
+      })
     }
   }
 
@@ -36,7 +44,7 @@ class App extends Component {
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">KNTL</h1>
+          <h1 className="App-title"></h1>
         </header>
         <p className="App-intro">
           To get started, edit <code>src/App.js</code> and save to reload.
@@ -44,7 +52,7 @@ class App extends Component {
         <Button onClick={this.getImage} color="warning">Fetch!</Button>
         <br/><br/>
         <div>
-          <img src={this.state.pictures[0]} />
+          {this.state.isLoading ? <Loader /> : (this.state.pictures[0] && <img width="500" height="377" src={this.state.pictures[0]}/> ) }
         </div>
       </div>
     );
