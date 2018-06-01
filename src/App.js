@@ -5,7 +5,11 @@ import logo from './logo.svg';
 import './App.css';
 import { Button } from 'reactstrap';
 
-var Loader = require('react-loader');
+import PersonList from './Component/PersonList';
+import PersonInput from './Component/PersonInput';
+
+const Loader = require('react-loader');
+//const Aftership = require('aftership')('80fb9c38-965a-4adc-ba8d-365024843f05');
 
 class App extends Component {
 
@@ -13,10 +17,9 @@ class App extends Component {
     super();
     this.getImage = this.getImage.bind(this);
     this.state = {
-      pictures: [],
+      pictures: ["https://images.pexels.com/photos/356378/pexels-photo-356378.jpeg?auto=compress&cs=tinysrgb&h=350"],
       isLoading: false,
     };
-    console.log(this.state.isLoading);
   }
 
   async getImage() {
@@ -39,20 +42,64 @@ class App extends Component {
     }
   }
 
+  createTable = () => {
+    let table = []
+    var tdKey = 0;
+    // Outer loop to create parent
+    for (let i = 0; i < 5; i++) {
+      let children = []
+      //Inner loop to create children
+      for (let j = 0; j < 3; j++) {
+        children.push(<td key={tdKey}>{`Column ${j + 1}`}</td>)
+        tdKey++;
+      }
+      //Create the parent and add the children
+      table.push(<tr key={tdKey}>{children}</tr>)
+    }
+    return table
+  }
+
   render() {
     return (
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title"></h1>
+          <h1 className="App-title">MyApp</h1>
         </header>
+
         <p className="App-intro">
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
-        <Button onClick={this.getImage} color="warning">Fetch!</Button>
+
+
+        <Button onClick={this.getImage} color="warning">Gibe me dogy!</Button>
         <br/><br/>
         <div>
-          {this.state.isLoading ? <Loader /> : (this.state.pictures[0] && <img width="500" height="377" src={this.state.pictures[0]}/> ) }
+          {this.state.isLoading ? <Loader /> : (this.state.pictures[0] && <img className="img-doggy" alt="dog" width="500" height="377" src={this.state.pictures[0]}/> ) }
+        </div>
+        <br/>
+
+        <div className="row margin-content">
+          <div className="col-sm-4">
+            <table className="table table-bordered">
+              <thead>
+                <tr>
+                  <td>Head 1</td>
+                  <td>Head 2</td>
+                  <td>Head 3</td>
+                </tr>
+              </thead>
+              <tbody>{this.createTable()}</tbody>
+            </table>
+          </div>
+
+          <div className="col-sm-5">
+            <PersonList/>
+          </div>
+
+          <div className="col-sm-3">
+            <PersonInput/>
+          </div>
         </div>
       </div>
     );
