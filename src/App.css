@@ -38,6 +38,11 @@
 }
 
 .img-doggy{
-  border-radius: 25px;
+  border-radius: 5px;
   box-shadow: 1px 2px 5px 2px grey;
+}
+
+.loading-logo {
+  animation: App-logo-spin infinite 3s linear;
+  height: 80px;
 }

@@ -2,11 +2,14 @@ import React, { Component } from 'react';
 import Axios from 'axios';
 
 import logo from './logo.svg';
+import loadinglogo from './asset/loading.svg';
 import './App.css';
 import { Button } from 'reactstrap';
 
-import PersonList from './Component/PersonList';
-import PersonInput from './Component/PersonInput';
+import PersonList from './Component/Person/PersonList';
+import PersonInput from './Component/Person/PersonInput';
+
+import TableExample from './Component/Tables/TableExample';
 
 const Loader = require('react-loader');
 //const Aftership = require('aftership')('80fb9c38-965a-4adc-ba8d-365024843f05');
@@ -42,23 +45,6 @@ class App extends Component {
     }
   }
 
-  createTable = () => {
-    let table = []
-    var tdKey = 0;
-    // Outer loop to create parent
-    for (let i = 0; i < 5; i++) {
-      let children = []
-      //Inner loop to create children
-      for (let j = 0; j < 3; j++) {
-        children.push(<td key={tdKey}>{`Column ${j + 1}`}</td>)
-        tdKey++;
-      }
-      //Create the parent and add the children
-      table.push(<tr key={tdKey}>{children}</tr>)
-    }
-    return table
-  }
-
   render() {
     return (
       <div className="App">
@@ -71,11 +57,10 @@ class App extends Component {
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
 
-
         <Button onClick={this.getImage} color="warning">Gibe me dogy!</Button>
         <br/><br/>
         <div>
-          {this.state.isLoading ? <Loader /> : (this.state.pictures[0] && <img className="img-doggy" alt="dog" width="500" height="377" src={this.state.pictures[0]}/> ) }
+          {this.state.isLoading ? <div><img src={loadinglogo} className="loading-logo" alt="loading" /></div> : (this.state.pictures[0] && <img className="img-doggy" alt="dog" width="500" height="377" src={this.state.pictures[0]}/> ) }
         </div>
         <br/>
 
@@ -89,7 +74,7 @@ class App extends Component {
                   <td>Head 3</td>
                 </tr>
               </thead>
-              <tbody>{this.createTable()}</tbody>
+              <TableExample/>
             </table>
           </div>
 
